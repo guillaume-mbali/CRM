@@ -11,10 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=InvoiceRepository::class)
  * @ApiResource(
- *     normalizationContext={
- *      "groups"={"invoices"}
- *     },
- * denormalizationContext={"disable_type_enforcement"=true}
+ *  denormalizationContext={"disable_type_enforcement"=true}
  * )
  *
  */

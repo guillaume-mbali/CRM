@@ -15,7 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ApiResource(
- *      denormalizationContext={"disable_type_enforcement"=true}
+ *      denormalizationContext={"disable_type_enforcement"=true},
+ *     normalizationContext={"groups"={"users_read"}}
  * )
  * @UniqueEntity("email",message="Un utilisateur ayant cette adresse email existe déjà")
  *
@@ -26,13 +27,13 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"customers","invoices"})
+     * @Groups({"customers","invoices","users_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"customers","invoices"})
+     * @Groups({"customers","invoices","users_read"})
      * @Assert\NotBlank(message="L'email doit être renseigner !")
      * @Assert\Email(message="L'adresse email doit avoir un format valide")
      */
@@ -52,7 +53,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers","invoices"})
+     * @Groups({"customers","invoices","users_read"})
      * @Assert\NotBlank(message="Le prénom est obligatoire")
      * @Assert\Length(min=3,minMessage="Le prénom doit être entre 3 et 30 caractères",max=30,maxMessage="Le prénom doit être entre 3 et 30 caractères")
      */
@@ -60,7 +61,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"customers","invoices"})
+     * @Groups({"customers","invoices","users_read"})
      * @Assert\Length(min=3,minMessage="Le nom doit être entre 3 et 30 caractères",max=30,maxMessage="Le nom doit être entre 3 et 30 caractères")
      */
     private $lastName;
