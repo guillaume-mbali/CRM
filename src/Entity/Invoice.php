@@ -13,6 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *  denormalizationContext={"disable_type_enforcement"=true}
  * )
+ *  normalizationContext={
+ *     "groups"={"invoices,users"}
+ *     }
  *
  */
 class Invoice
