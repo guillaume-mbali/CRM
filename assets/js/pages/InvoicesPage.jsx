@@ -3,6 +3,7 @@ import Pagination from '../components/Pagination';
 import moment from "moment";
 import InvoicesAPI from "../services/invoicesAPI";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import { Link } from 'react-router-dom';
 
 
 const STATUS_CLASSES = {
@@ -80,7 +81,12 @@ const InvoicesPage = (props) => {
 
     return ( 
         <>
+         
+            <div className="mb-3 d-flex justify-content-between align-items-center">
             <h1>Liste des factures</h1>
+            <Link className="btn btn-primary" to="/invoices/new">Créer une facture</Link>
+            </div>
+            
             <div className="row">
                 <div className="col-sm">
                     <div className="form-group">
@@ -107,8 +113,8 @@ const InvoicesPage = (props) => {
                         <th>Numéro</th>
                         <th>Client</th>
                         <th className="text-center">Date d'envoi</th>
-                        <th className="text-center">Statut</th>
                         <th className="text-center">Montant</th>
+                        <th className="text-center">Statut</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -121,7 +127,7 @@ const InvoicesPage = (props) => {
                             <td className="text-center">{invoice.amount.toLocaleString()} €</td>
                             <td className="text-center"><FontAwesomeIcon icon={STATUS_CLASSES[invoice.status]}/><p>{STATUS_LABELS[invoice.status]}</p></td>
                             <td>
-                                <button className="btn btn-sm btn-primary mr-1">Editer</button>
+                                <Link to={"/invoices/" + invoice.id} className="btn btn-sm btn-primary mr-1">Editer</Link>
                                 <button className="btn btn-sm btn-danger" onClick={() => handleDelete(invoice.id)}>Supprimer</button>
                             </td>
                         </tr>

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Pagination from '../components/Pagination';
-import CustomersAPI from "../services/customersAPI"
+import CustomersAPI from "../services/customersAPI";
+import {Link} from "react-router-dom"
 
 const CustomersPage = (props) => {
 
@@ -56,7 +57,6 @@ const CustomersPage = (props) => {
             c.lastName.toLowerCase().includes(search.toLowerCase()) ||
             c.email.toLowerCase().includes(search.toLowerCase()) ||
             (c.company && c.company.toLowerCase().includes(search.toLowerCase()))
-            
     
     );
 
@@ -66,7 +66,11 @@ const CustomersPage = (props) => {
 
     return (
         <>
+        <div className="mb-3 d-flex justify-content-between align-items-center">
          <h1>Liste des clients</h1>
+         <Link to="/customers/new" className="btn btn-primary">Créer un Client</Link>
+
+        </div>
          <div className="form-group">
              <input className="form-control" onChange={handleSearch} value={search} placeholder="Rechercher..."/>
          </div>
