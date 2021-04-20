@@ -24,7 +24,7 @@ function updateInvoice(id, invoice){
 }
 function createInvoice(invoice){
     return axios.post(INVOICES_API, 
-                { ...invoice, amount:Number(invoice.amount), customer:'/api/customers/' + invoice.customer}); 
+                { ...invoice, amount:Number(invoice.amount),customer:'/api/customers/' + invoice.customer}); 
                
 }
 

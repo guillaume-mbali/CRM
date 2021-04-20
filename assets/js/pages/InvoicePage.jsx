@@ -34,7 +34,7 @@ const InvoicePage = ({history,match}) => {
             const data =  await CustomersAPI.findAll();
             setCustomers(data);
             setLoading(false);
-            if (!invoice.customer && !id) setInvoice({...invoice,customer: data[0].id});
+            if (!invoice.customer) setInvoice({...invoice,customer: data[0].id});
         }catch(error){
             toast.error("Une erreur est survenue");
             history.replace('/invoices');
@@ -101,6 +101,7 @@ const InvoicePage = ({history,match}) => {
                 setErrors(apiErrors); 
                 toast.error("Des erreurs dans votre formulaire");
             }
+            console.log(error.response);
         }
     }
 
