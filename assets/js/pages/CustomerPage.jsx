@@ -36,7 +36,7 @@ const CustomerPage = (props) => {
                 await customersAPI.updateCustomer(id,customer);
                 toast.success("Le client a bien été modifié");
             }else{
-                await customersAPI.createCustomer(customer)
+                await customersAPI.createCustomer(customer);
                 toast.success("Le client a bien été crée");
                 props.history.replace("/customers");
             };

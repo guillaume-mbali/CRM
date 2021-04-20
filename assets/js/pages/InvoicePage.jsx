@@ -8,6 +8,7 @@ import InvoicesAPI from '../services/invoicesAPI';
 import { toast } from 'react-toastify';
 import FormContentloader from '../components/loaders/FormContentloader';
 
+
 const InvoicePage = ({history,match}) => {
 
     const {id = "new"} = match.params;
