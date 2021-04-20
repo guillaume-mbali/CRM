@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 import Field from '../components/forms/Field';
 import Select from '../components/forms/Select';
 import CustomersAPI from'../services/customersAPI';
-import InvoicesAPI from '../services/invoicesAPI'
+import InvoicesAPI from '../services/invoicesAPI';
+import { toast } from 'react-toastify';
+import FormContentloader from '../components/loaders/FormContentloader';
 
 const InvoicePage = ({history,match}) => {
 
@@ -23,17 +25,19 @@ const InvoicePage = ({history,match}) => {
     });
 
     const [customers,setCustomers] = useState([]);
-    const [editing, setEditing] = useState(false)
+    const [editing, setEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     //Récupération des clients
     const fetchCustomers = async () => {
         try{
             const data =  await CustomersAPI.findAll();
             setCustomers(data);
-            if (!invoice.customer && !id) setInvoice({...invoice,customer: data[0].id})
+            setLoading(false);
+            if (!invoice.customer && !id) setInvoice({...invoice,customer: data[0].id});
         }catch(error){
-            console.log(error.response);
-            history.replace('/invoices')
+            toast.error("Une erreur est survenue");
+            history.replace('/invoices');
         }
     }
 
@@ -46,13 +50,12 @@ const InvoicePage = ({history,match}) => {
     const fetchInvoice = async id =>{
         try{
             const data = await InvoicesAPI.findOneInvoice(id);
-
-            const {amount, status, customer} = data;
-               
+            const {amount, status, customer} = data;          
             setInvoice({amount, status, customer: customer.id});
+            setLoading(false);
 
         }catch(error){
-            console.log(error.data);
+            toast.error("Une erreur est survenue");
             history.replace('/invoices')
         }
     }
@@ -81,8 +84,10 @@ const InvoicePage = ({history,match}) => {
         try{
             if (editing){
                await InvoicesAPI.updateInvoice(id, invoice);
+               toast.success("La facture a bien été modifiée");
              }else{
                 await InvoicesAPI.createInvoice(invoice);
+                toast.success("La facture a bien été enregistrée");
                 history.replace("/invoices");
             }
          
@@ -94,15 +99,19 @@ const InvoicePage = ({history,match}) => {
                     apiErrors[violation.propertyPath] = violation.message;
                 })
                 setErrors(apiErrors); 
+                toast.error("Des erreurs dans votre formulaire");
             }
-            console.log(error.response);
         }
     }
 
 
     return ( 
         <>
+       
             {editing && <h1>Modification d'une facture</h1> ||<h1>Création d'une facture</h1>}
+            {loading && <FormContentloader/>}
+
+            {!loading && 
             <form onSubmit={handleSubmit}>
                 <Field 
                 name="amount" 
@@ -139,7 +148,8 @@ const InvoicePage = ({history,match}) => {
                     <button type="submit" className="btn btn-success">Enregistrer</button>
                     <Link to="/invoices" className="btn btn-link">Retour</Link>
                 </div>
-            </form>
+            </form>}
+            
         </>
      );
 }

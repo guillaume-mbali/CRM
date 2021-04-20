@@ -2,12 +2,16 @@ import React,{useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Field from '../components/forms/Field';
 import customersAPI from '../services/customersAPI';
+import { toast } from 'react-toastify';
+import FormContentloader from '../components/loaders/FormContentloader';
 
 
 
-const CustomerPage = props => {
+const CustomerPage = (props) => {
 
     const {id="new"} = props.match.params;
+
+    const [loading, setLoading] = useState(false);
 
     const [customer, setCustomer] = useState({
         lastName: "",
@@ -28,14 +32,14 @@ const CustomerPage = props => {
 
         try{
             if(editing){
+                setErrors({});
                 await customersAPI.updateCustomer(id,customer);
-                console.log(response.data);
+                toast.success("Le client a bien été modifié");
             }else{
                 await customersAPI.createCustomer(customer)
+                toast.success("Le client a bien été crée");
                 props.history.replace("/customers");
             };
-           
-            setErrors({});
         }catch({response}){
             const {violations} = response.data;
             if(violations){
@@ -44,6 +48,7 @@ const CustomerPage = props => {
                     apiErrors[violation.propertyPath] = violation.message;
                 })
                 setErrors(apiErrors); 
+                toast.success("Des erreurs dans votre formulaire");
             }
         }
         
@@ -53,7 +58,8 @@ const CustomerPage = props => {
     const fetchCustomer = async id => {
         try {
             const {firstName,lastName,email,company} = await customersAPI.findOne(id);
-            setCustomer({firstName,lastName,email,company})
+            setCustomer({firstName,lastName,email,company});
+            setLoading(false);
         }catch(error){
             console.log(error.response);
             history.replace("/customers")
@@ -67,10 +73,6 @@ const CustomerPage = props => {
         company:""
     })
 
-    
-    if(id !=="new"){
-        console.log(id);
-    }
 
     const [editing, setEditing] = useState(false);
 
@@ -79,6 +81,7 @@ const CustomerPage = props => {
     useEffect(() => {
         if(id != "new")  {
             setEditing(true);
+            setLoading(true);
             fetchCustomer(id);
         }
     }, [id]);
@@ -87,6 +90,9 @@ const CustomerPage = props => {
         <>
         {!editing  && <h1>Création d'un client</h1> || <h1>Modification d'un client</h1>}
 
+        {loading && <FormContentloader/>}
+        
+        {!loading && 
         <form onSubmit={handleSubmit}>
             <Field 
             name="lastName" 
@@ -127,6 +133,7 @@ const CustomerPage = props => {
             </div>
           
         </form>
+        }
         </>
     );
 }

@@ -13,6 +13,8 @@ import { HashRouter,Switch, Route, withRouter, Redirect } from 'react-router-dom
 import AuthAPI from "./js/services/authAPI";
 import AuthContext from "./js/contexts/AuthContext";
 import PrivateRoute from "./js/components/PrivateRoute";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'; 
 
 AuthAPI.setup()
 
@@ -47,6 +49,7 @@ const contextValue = {
                     </Switch>
                 </main>
             </HashRouter>
+            <ToastContainer position={toast.POSITION.BOTTOM_LEFT}/>
         </AuthContext.Provider>
        
     );
