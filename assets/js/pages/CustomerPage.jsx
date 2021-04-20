@@ -54,7 +54,7 @@ const CustomerPage = (props) => {
         
     }
     
-    // Récupération du customeren fonction de l'identifiant
+    // Récupération du customer en fonction de l'identifiant
     const fetchCustomer = async id => {
         try {
             const {firstName,lastName,email,company} = await customersAPI.findOne(id);
