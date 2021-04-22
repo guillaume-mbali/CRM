@@ -37,8 +37,7 @@ const LoginPage = ({history}) => {
             toast.success("Vous êtes désormais connecté !")
             history.replace("/customers");
         }catch(error){
-            toast.error("Une erreur est survenue");
-           setError("E-mail invalide");
+            toast.error("Identifiants inccorectes");
         }
      
     }
