@@ -102,7 +102,6 @@ const InvoicePage = ({history,match}) => {
                 setErrors(apiErrors); 
                 toast.error("Des erreurs dans votre formulaire");
             }
-            console.log(error.response);
         }
     }
 
