@@ -24,13 +24,13 @@ class Invoice
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"invoices_read","customers_read"})
+     * @Groups({"invoices_read","customers_read","users_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"invoices_read","customers_read"})
+     * @Groups({"invoices_read","customers_read","users_read"})
      * @Assert\NotBlank(message="Le montant de la facture est obligatoire !")
      * @Assert\Type(type="numeric",message="Le montant de la fature doit etre un numérique !")
      */
