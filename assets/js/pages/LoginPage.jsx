@@ -70,7 +70,7 @@ const LoginPage = ({history}) => {
                 </button>
             </div>
         </form>
-        <p>Vous pouvez utiliser comme adresse email : guillaume.mbali72@gmail.com et comme mot de passe : password</p>
+        <p>Pour vous connecté, vous pouvez utiliser comme adresse email : pierre.dupond@gmail.com et comme mot de passe : password</p>
         </>
     );
 }
